@@ -15,7 +15,15 @@
 
 <br /><br />
 
+<img src="./assets/terminal.svg" width="100%" alt="Terminal: whoami, List &amp; Sell GmbH full-stack engineering team in Berlin. git log: Laravel web app with custom CRM, Shopify store synced with JTL Wawi, native iOS &amp; Android app, REST API for Amazon &amp; eBay, AI assistant. npm run deploy: build, tests and deploy passed." />
+
+<br /><br />
+
 <img src="./assets/services.svg" width="100%" alt="What we build: Web Applications, Commerce Engineering, Custom Software, APIs &amp; Integrations, Mobile Apps, AI Solutions." />
+
+<br /><br />
+
+<img src="./assets/architecture.svg" width="100%" alt="Architecture: web app, webshop and mobile app clients connect to an API &amp; backend on PHP, Laravel and Node.js, with database and AI services, integrated with JTL Wawi, Afterbuy, Amazon, eBay and analytics." />
 
 <br /><br />
 
@@ -23,7 +31,20 @@
 
 <br /><br />
 
+<img src="./assets/principles.svg" width="100%" alt="Engineering principles: clean readable code, code review on every change, QA before each release, everything version-controlled, secure and GDPR-aware, fast and responsive, documented and handed over, shipped, monitored and maintained." />
+
+<br /><br />
+
 <img src="./assets/platforms.svg" width="100%" alt="Tech stack: PHP, Laravel, Node.js, databases, REST APIs, JavaScript, AngularJS, HTML5, CSS3, iOS, Android, Shopify, WooCommerce, Magento, Gambio, xt:Commerce, JTL, Afterbuy, WordPress, TYPO3, Joomla, Amazon and eBay integrations, Google Tag Manager, Google Analytics, Matomo." />
+
+<br /><br />
+
+<img src="./assets/activity.svg" width="100%" alt="Commit activity" />
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Listandsell2021/Listandsell2021/output/github-snake-dark.svg" />
+  <img src="https://raw.githubusercontent.com/Listandsell2021/Listandsell2021/output/github-snake.svg" width="100%" alt="Contribution graph eaten by a snake" />
+</picture>
 
 <br /><br />
 

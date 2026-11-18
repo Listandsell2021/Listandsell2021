@@ -54,6 +54,27 @@ CODE_FONT = "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace"
 SYNTAX = {"kw": RED_LIGHT, "name": "#ffd166", "prop": "#7dd3fc", "str": "#a5e075",
           "punct": "#c9d2e3", "bool": "#fbbc05", "comment": "#6b7a99"}
 
+TERMINAL_LOG = [("a3f9c21", "Laravel web app with custom CRM"),
+                ("7be104d", "Shopify store synced with JTL Wawi"),
+                ("c91e5aa", "native iOS & Android app release"),
+                ("4d2b8f0", "REST API for Amazon & eBay listings"),
+                ("e18c7b3", "AI assistant built into the workflow")]
+TERM = {"ok": "#34d399", "dir": "#7dd3fc", "git": "#5b8cff", "branch": RED_LIGHT, "cmd": "#ffffff",
+        "out": "#c9d2e3", "hash": "#fbbc05", "type": "#a5e075", "msg": "#e6ebf5", "star": RED_LIGHT}
+
+ARCH_CLIENTS = [("web", "Web App", "Laravel · JavaScript"), ("cart", "Webshop", "Shopify · WooCommerce"),
+                ("phone", "Mobile App", "iOS · Android · Hybrid")]
+ARCH_CORE = [("spark", "AI Services", "Automation & assistants", 200, 60),
+             ("code", "API & Backend", "PHP · Laravel · Node.js", 298, 120),
+             ("database", "Database", "ERP · CRM · CMS data", 456, 60)]
+ARCH_INTEGRATIONS = [("JTL Wawi", "#3f7be0"), ("Afterbuy", "#ff7a2a"), ("Amazon", "#FF9900"),
+                     ("eBay", "#e53238"), ("Analytics", "#a245ff")]
+
+PRINCIPLES = [("lint", "Clean, readable code"), ("review", "Code review on every change"),
+              ("test", "QA before each release"), ("git", "Everything version-controlled"),
+              ("security", "Secure & GDPR-aware"), ("perf", "Fast & responsive by default"),
+              ("docs", "Documented & handed over"), ("deploy", "Shipped, monitored, maintained")]
+
 BUTTONS = [
     ("btn-website", "listandsell.de", "globe", RED),
     ("btn-email", "info@listandsell.de", "mail", RED),
@@ -84,6 +105,7 @@ ICONS = {
     "database": '<ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 2.2 4.5 4 10 4s10-1.8 10-4V8M6 16c0 2.2 4.5 4 10 4s10-1.8 10-4"/>',
     "plug": '<path d="M12 4v7M20 4v7M8 11h16v5a8 8 0 0 1-16 0zM16 24v5"/>',
     "branch": '<circle cx="9" cy="7" r="3"/><circle cx="9" cy="25" r="3"/><circle cx="23" cy="10" r="3"/><path d="M9 10v12M23 13c0 6-14 4-14 9"/>',
+    "check": '<path d="M8 16.5l5 5 11-11"/>',
 }
 
 # ---------------------------------------------------------------- shared design system
@@ -258,6 +280,22 @@ def build_hero():
 # ---------------------------------------------------------------- sections
 
 
+def window(x, y, w, h, fill, bar_h, clipped="", lights=True):
+    """App-window chrome: shadowed rounded frame, tinted title bar, optional traffic lights."""
+    dots = "".join(f'<circle cx="{x + 24 + i * 18}" cy="{y + bar_h / 2}" r="5" fill="{c}"/>'
+                   for i, c in enumerate(["#ff5f57", "#febc2e", "#28c840"])) if lights else ""
+    return (f'<clipPath id="win"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16"/></clipPath>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16" fill="{fill}" filter="url(#shadow)"/>'
+            f'<g clip-path="url(#win)"><rect x="{x}" y="{y}" width="{w}" height="{bar_h}" fill="#fff" fill-opacity=".035"/>{clipped}</g>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="16" fill="none" stroke="#fff" stroke-opacity=".12"/>{dots}')
+
+
+def code_text(x, y, tokens, palette, size):
+    """One monospace line from (text, kind) tokens coloured via palette."""
+    spans = "".join(f'<tspan fill="{palette[kind]}">{escape(s)}</tspan>' for s, kind in tokens)
+    return f'<text x="{x}" y="{y}" font-size="{size}" class="mono" xml:space="preserve">{spans}</text>'
+
+
 def value_tokens(value):
     if isinstance(value, bool):
         return [("true" if value else "false", "bool")]
@@ -290,16 +328,13 @@ def build_about():
     rows = []
     for i, tokens in enumerate(lines):
         y = first_base + i * line_h
-        spans = "".join(f'<tspan fill="{SYNTAX[kind]}">{escape(s)}</tspan>' for s, kind in tokens)
         rows.append(f'<g class="rise" style="animation-delay:{i * .08:.2f}s">'
                     + text(CONTENT_LEFT + 48, y, str(i + 1), 17, "#4a5a7a", 500, "end", 'class="mono"')
-                    + f'<text x="{code_x}" y="{y}" font-size="20" class="mono" xml:space="preserve">{spans}</text></g>')
+                    + code_text(code_x, y, tokens, SYNTAX, 20) + '</g>')
     cursor_x = code_x + len("};") * char_w + 4
     highlight = f'<rect x="{CONTENT_LEFT}" y="{last_base - 24}" width="{win_w}" height="{line_h}" fill="#fff" fill-opacity=".04"/>'
     cursor = f'<rect class="blink" x="{cursor_x:.0f}" y="{last_base - 19}" width="11" height="24" fill="{RED_LIGHT}"/>'
 
-    dots = "".join(f'<circle cx="{CONTENT_LEFT + 24 + i * 18}" cy="{win_y + 22}" r="5" fill="{c}"/>'
-                   for i, c in enumerate(["#ff5f57", "#febc2e", "#28c840"]))
     tab = (f'<rect x="{CONTENT_LEFT + 96}" y="{win_y + 8}" width="196" height="36" rx="8" fill="#0d2348"/>'
            f'<rect x="{CONTENT_LEFT + 110}" y="{win_y + 17}" width="20" height="18" rx="3" fill="#3178c6"/>'
            + text(CONTENT_LEFT + 120, win_y + 30, "TS", 10, "#fff", 800, "middle")
@@ -308,13 +343,9 @@ def build_about():
               + icon("branch", CONTENT_LEFT + 16, status_y + 8, .5, "#fff", 3.5)
               + text(CONTENT_LEFT + 38, status_y + 21, "main   ✓ 0 problems", 13, "#fff", 600, extra='xml:space="preserve"')
               + text(CONTENT_RIGHT - 16, status_y + 21, "TypeScript   UTF-8   LF", 13, "#fff", 600, "end", extra='xml:space="preserve"'))
-    window = (f'<clipPath id="win"><rect x="{CONTENT_LEFT}" y="{win_y}" width="{win_w}" height="{win_h}" rx="16"/></clipPath>'
-              f'<rect x="{CONTENT_LEFT}" y="{win_y}" width="{win_w}" height="{win_h}" rx="16" fill="#071630" filter="url(#shadow)"/>'
-              f'<g clip-path="url(#win)"><rect x="{CONTENT_LEFT}" y="{win_y}" width="{win_w}" height="44" fill="#fff" fill-opacity=".035"/>'
-              f'{highlight}{status}</g>'
-              f'<rect x="{CONTENT_LEFT}" y="{win_y}" width="{win_w}" height="{win_h}" rx="16" fill="none" stroke="#fff" stroke-opacity=".12"/>'
-              + dots + tab + "".join(rows) + cursor)
-    body = panel(height) + heading(CONTENT_LEFT, 80, "Who we are", "Engineers who ship.") + window
+    editor = (window(CONTENT_LEFT, win_y, win_w, win_h, "#071630", 44, highlight + status)
+              + tab + "".join(rows) + cursor)
+    body = panel(height) + heading(CONTENT_LEFT, 80, "Who we are", "Engineers who ship.") + editor
     label = "listandsell.ts: " + "; ".join(f"{k}: {v if not isinstance(v, list) else ', '.join(v)}" for k, v in CODE_OBJECT)
     return svg(height, label, body)
 
@@ -396,6 +427,123 @@ def build_cta():
     return svg(height, "Have a project to build? Let's ship it.", body, defs)
 
 
+def prompt(cmd=""):
+    return [("➜  ", "ok"), ("listandsell ", "dir"), ("git:(", "git"), ("main", "branch"), (") ", "git"), (cmd, "cmd")]
+
+
+def terminal_lines():
+    lines = [prompt("whoami"), [("List & Sell GmbH · full-stack engineering team · Berlin, DE", "out")],
+             prompt("git log --oneline -5")]
+    for i, (sha, msg) in enumerate(TERMINAL_LOG):
+        head = [(" (", "git"), ("HEAD -> ", "dir"), ("main", "branch"), (")", "git")] if i == 0 else []
+        lines.append([("* ", "star"), (sha, "hash"), *head, (" feat:", "type"), (" " + msg, "msg")])
+    deploy = [("✓ ", "ok"), ("build    ", "out"), ("✓ ", "ok"), ("tests    ", "out"),
+              ("✓ ", "ok"), ("deploy    ", "out"), ("→ live in production", "ok")]
+    return lines + [prompt("npm run deploy"), deploy, prompt()]
+
+
+def build_terminal():
+    lines, line_h, win_y, size = terminal_lines(), 34, 160, 19
+    win_w = CONTENT_RIGHT - CONTENT_LEFT
+    first_base = win_y + 40 + 40
+    last_base = first_base + (len(lines) - 1) * line_h
+    win_h = last_base + 30 - win_y
+    height = win_y + win_h + 48
+    code_x = CONTENT_LEFT + 28
+    rows = "".join(f'<g class="rise" style="animation-delay:{i * .22:.2f}s">'
+                   + code_text(code_x, first_base + i * line_h, tokens, TERM, size) + '</g>'
+                   for i, tokens in enumerate(lines))
+    cursor_x = code_x + sum(len(s) for s, _ in prompt()) * size * .602
+    cursor = f'<rect class="blink" x="{cursor_x:.0f}" y="{last_base - 18}" width="11" height="23" fill="{RED_LIGHT}"/>'
+    title = text(WIDTH / 2, win_y + 26, "zsh — ~/listandsell", 14, MUTED, 500, "middle", 'class="mono"')
+    body = (panel(height) + heading(CONTENT_LEFT, 80, "Terminal", "Straight from the command line.")
+            + window(CONTENT_LEFT, win_y, win_w, win_h, "#050b18", 40) + title + rows + cursor)
+    label = "Terminal: whoami → List & Sell GmbH engineering team. Recent work: " + "; ".join(m for _, m in TERMINAL_LOG)
+    return svg(height, label, body)
+
+
+def arch_edge(d, color):
+    return (f'<path d="{d}" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2"/>'
+            f'<path class="flow" d="{d}" fill="none" stroke="{color}" stroke-width="2.5" stroke-dasharray="6 30" stroke-linecap="round"/>')
+
+
+def arch_node(x, y, w, h, icon_name, title, sub, grad, highlight=False):
+    stroke = 'stroke="url(#accent)" stroke-width="2"' if highlight else 'stroke="#fff" stroke-opacity=".14"'
+    tile_y = y + (h - 44) / 2
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="#0f2a57" {stroke} filter="url(#shadow)"/>'
+            f'<rect x="{x + 16}" y="{tile_y}" width="44" height="44" rx="12" fill="url(#{grad})"/>'
+            + icon(icon_name, x + 25.6, tile_y + 9.6, .8)
+            + text(x + 74, y + h / 2 - 2, title, 22 if highlight else 18, "#fff", 800)
+            + text(x + 74, y + h / 2 + 20, sub, 13, MUTED, 500))
+
+
+def build_architecture():
+    height, core_x, core_w, core_cy = 572, 460, 280, 358
+    client_x, client_w, integ_x, integ_w = CONTENT_LEFT, 250, 912, 240
+    grads = [("#ff2a40", "#ff7a2a"), ("#ff8a00", "#fbbc05"), ("#a245ff", "#ff3d9a"),
+             ("#ff2a40", "#a245ff"), ("#2f6bff", "#5b3df5"), ("#16c784", "#0ea5a4")]
+    defs = "".join(gradient(f"a{i}", *g) for i, g in enumerate(grads))
+    client_cys = [248 + i * 110 for i in range(len(ARCH_CLIENTS))]
+    integ_ys = [192 + i * 70 for i in range(len(ARCH_INTEGRATIONS))]
+
+    edges = "".join(arch_edge(f"M{client_x + client_w} {cy} C 380 {cy}, 380 {core_cy}, {core_x} {core_cy}", RED_LIGHT) for cy in client_cys)
+    edges += "".join(arch_edge(f"M{core_x + core_w} {core_cy} C 830 {core_cy}, 830 {y + 26}, {integ_x} {y + 26}", "#ff7a2a") for y in integ_ys)
+    edges += arch_edge("M600 298V260", "#a245ff") + arch_edge("M600 418V456", "#2f6bff")
+
+    clients = "".join(arch_node(client_x, cy - 36, client_w, 72, ic, t, s, f"a{i}") for i, ((ic, t, s), cy) in enumerate(zip(ARCH_CLIENTS, client_cys)))
+    core = "".join(arch_node(core_x, y, core_w, h, ic, t, s, f"a{3 + i}", highlight=(i == 1))
+                   for i, (ic, t, s, y, h) in enumerate(ARCH_CORE))
+    integrations = "".join(
+        f'<rect x="{integ_x}" y="{y}" width="{integ_w}" height="52" rx="26" fill="#0f2a57" stroke="#fff" stroke-opacity=".14"/>'
+        f'<circle cx="{integ_x + 26}" cy="{y + 26}" r="7" fill="{color}"/>' + text(integ_x + 46, y + 32, name, 17, "#fff", 700)
+        for (name, color), y in zip(ARCH_INTEGRATIONS, integ_ys))
+    labels = "".join(text(x, 180, s, 13, MUTED, 700, a, 'letter-spacing="2"')
+                     for x, s, a in [(client_x, "CLIENTS", "start"), (600, "CORE", "middle"), (integ_x, "INTEGRATIONS", "start")])
+    body = (panel(height) + heading(CONTENT_LEFT, 80, "Architecture", "How our systems fit together.")
+            + labels + edges + clients + core + integrations)
+    label = ("Architecture: web app, webshop and mobile app clients connect to an API & backend (PHP, Laravel, Node.js) "
+             "with database and AI services, integrated with " + ", ".join(n for n, _ in ARCH_INTEGRATIONS))
+    return svg(height, label, body, defs)
+
+
+def build_principles():
+    win_y, header_h, row_h = 160, 84, 62
+    win_w = CONTENT_RIGHT - CONTENT_LEFT
+    per_col = (len(PRINCIPLES) + 1) // 2
+    win_h = header_h + per_col * row_h + 16
+    height = win_y + win_h + 48
+    col_w = win_w / 2
+    green = "#34d399"
+    header = (f'<circle cx="{CONTENT_LEFT + 44}" cy="{win_y + 42}" r="18" fill="#16c784"/>'
+              + icon("check", CONTENT_LEFT + 32.8, win_y + 30.8, .7, "#fff", 4)
+              + text(CONTENT_LEFT + 76, win_y + 38, "All checks have passed", 22, "#fff", 800)
+              + text(CONTENT_LEFT + 76, win_y + 62, f"{len(PRINCIPLES)} successful checks on main", 15, MUTED, 500)
+              + f'<rect x="{CONTENT_RIGHT - 140}" y="{win_y + 26}" width="116" height="32" rx="16" fill="#16c784" fill-opacity=".15"/>'
+              + text(CONTENT_RIGHT - 82, win_y + 47, "passing", 15, green, 700, "middle", 'class="mono"')
+              + f'<path d="M{CONTENT_LEFT} {win_y + header_h}H{CONTENT_RIGHT}" stroke="#fff" stroke-opacity=".1"/>'
+              + f'<path d="M{CONTENT_LEFT + col_w} {win_y + header_h}V{win_y + win_h}" stroke="#fff" stroke-opacity=".08"/>')
+    rows = []
+    for i, (job, desc) in enumerate(PRINCIPLES):
+        x0 = CONTENT_LEFT + (i // per_col) * col_w
+        cy = win_y + header_h + 8 + (i % per_col) * row_h + row_h / 2
+        chip_w = len(job) * 9.03 + 24
+        rows.append(f'<g class="rise" style="animation-delay:{i * .15:.2f}s">'
+                    f'<circle cx="{x0 + 40}" cy="{cy}" r="13" fill="{green}" fill-opacity=".15" stroke="{green}" stroke-width="1.5"/>'
+                    + icon("check", x0 + 32, cy - 8, .5, green, 4.5)
+                    + f'<rect x="{x0 + 66}" y="{cy - 15}" width="{chip_w:.0f}" height="30" rx="7" fill="#fff" fill-opacity=".06"/>'
+                    + text(x0 + 78, cy + 5, job, 15, "#e6ebf5", 600, extra='class="mono"')
+                    + text(x0 + 80 + chip_w, cy + 6, desc, 17, "#e6ebf5", 500)
+                    + text(x0 + col_w - 28, cy + 5, "passed", 14, green, 600, "end", 'class="mono"') + '</g>')
+    body = (panel(height) + heading(CONTENT_LEFT, 80, "Engineering principles", "Every release passes the checks.")
+            + window(CONTENT_LEFT, win_y, win_w, win_h, "#071630", header_h, lights=False) + header + "".join(rows))
+    return svg(height, "Engineering principles: " + "; ".join(d for _, d in PRINCIPLES), body)
+
+
+def build_activity():
+    height = 150
+    return svg(height, "Commit activity", panel(height) + heading(CONTENT_LEFT, 66, "Commit activity", "Always shipping."))
+
+
 def build_buttons():
     outputs = {}
     for name, label, icon_name, color in BUTTONS:
@@ -409,9 +557,10 @@ def build_buttons():
 
 
 def main():
-    outputs = {"hero": build_hero(), "about": build_about(), "services": build_services(),
-               "process": build_process(), "platforms": build_platforms(), "cta": build_cta(),
-               **build_buttons()}
+    outputs = {"hero": build_hero(), "about": build_about(), "terminal": build_terminal(),
+               "services": build_services(), "architecture": build_architecture(), "process": build_process(),
+               "principles": build_principles(), "platforms": build_platforms(), "activity": build_activity(),
+               "cta": build_cta(), **build_buttons()}
     ASSETS.mkdir(exist_ok=True)
     for name, content in outputs.items():
         ET.fromstring(content)  # fail fast on malformed XML
