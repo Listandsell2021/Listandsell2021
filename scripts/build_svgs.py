@@ -4,11 +4,13 @@
 Edit the text/data, then run:  python3 scripts/build_svgs.py
 Each output is parsed as XML before it is written, so a broken file fails loudly.
 """
+import base64
 from pathlib import Path
 from xml.sax.saxutils import escape
 import xml.etree.ElementTree as ET
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
+LOGO_PNG = ASSETS / "logo.png"
 FONT = "'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
 RED, RED_LIGHT, NAVY, MUTED = "#d0112a", "#ff2a40", "#00285a", "#a9b5cc"
 WIDTH = 1200
@@ -207,19 +209,21 @@ def chip(x, y, label, dot, size=17, height=40):
 # ---------------------------------------------------------------- hero
 
 
-def brand_lockup():
-    bars = "".join(f'<rect x="{70 + i * 10}" y="{86 - h}" width="7" height="{h}" rx="2" fill="{c}"/>'
-                   for i, (h, c) in enumerate([(10, RED), (16, "#ff6a2a"), (22, "#fbbc05"), (28, "#34c759")]))
-    word = f'<text x="112" y="86" font-size="26" font-weight="800" fill="#fff">List <tspan fill="{RED_LIGHT}">&amp;</tspan></text>'
-    tag = ('<g transform="rotate(-8 232 76)"><rect x="192" y="60" width="80" height="32" rx="7" fill="url(#accent)"/>'
-           f'<circle cx="203" cy="76" r="3.5" fill="{NAVY}"/>' + text(240, 83, "S€LL", 18, "#fff", 800, "middle") + '</g>')
-    return bars + word + tag
-
-
 def hero_logo():
-    """The brand lockup scaled up as the hero's only text; maps lockup point (70, 75) to (70, 320)."""
-    scale = 2.6
-    return f'<g transform="translate({70 - 70 * scale} {320 - 75 * scale}) scale({scale})">{brand_lockup()}</g>'
+    """The official logo (black text) on a white card, embedded as a data URI.
+
+    GitHub serves README SVGs as <img>, which blocks external image loads, so the PNG must be inline.
+    """
+    logo_w, logo_h = 804, 304  # assets/logo.png
+    w = 460
+    h = w * logo_h / logo_w
+    pad, card_x = 34, 70
+    card_w, card_h = w + 2 * pad, h + 2 * pad
+    card_y = 320 - card_h / 2
+    data = base64.b64encode(LOGO_PNG.read_bytes()).decode("ascii")
+    return (f'<g class="float3"><rect x="{card_x}" y="{card_y:.0f}" width="{card_w}" height="{card_h:.0f}" rx="28" fill="#fff" filter="url(#shadow)"/>'
+            f'<rect x="{card_x + pad}" y="{card_y + card_h - 6:.0f}" width="{w}" height="6" rx="3" fill="url(#accent)"/>'
+            f'<image x="{card_x + pad}" y="{card_y + pad - 6:.0f}" width="{w}" height="{h:.0f}" href="data:image/png;base64,{data}"/></g>')
 
 
 def browser_mock():
