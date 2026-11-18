@@ -543,11 +543,6 @@ def build_principles():
     return svg(height, "Engineering principles: " + "; ".join(d for _, d in PRINCIPLES), body)
 
 
-def build_activity():
-    height = 150
-    return svg(height, "Commit activity", panel(height) + heading(CONTENT_LEFT, 66, "Commit activity", "Always shipping."))
-
-
 def build_buttons():
     outputs = {}
     for name, label, icon_name, color in BUTTONS:
@@ -563,7 +558,7 @@ def build_buttons():
 def main():
     outputs = {"hero": build_hero(), "about": build_about(), "terminal": build_terminal(),
                "services": build_services(), "architecture": build_architecture(), "process": build_process(),
-               "principles": build_principles(), "platforms": build_platforms(), "activity": build_activity(),
+               "principles": build_principles(), "platforms": build_platforms(),
                "cta": build_cta(), **build_buttons()}
     ASSETS.mkdir(exist_ok=True)
     for name, content in outputs.items():

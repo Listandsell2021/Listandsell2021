@@ -39,15 +39,6 @@
 
 <br /><br />
 
-<img src="./assets/activity.svg" width="100%" alt="Commit activity" />
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Listandsell2021/Listandsell2021/output/github-snake-dark.svg" />
-  <img src="https://raw.githubusercontent.com/Listandsell2021/Listandsell2021/output/github-snake.svg" width="100%" alt="Contribution graph eaten by a snake" />
-</picture>
-
-<br /><br />
-
 <a href="https://listandsell.de/"><img src="./assets/cta.svg" width="100%" alt="Have a project to build? Let's ship it. Start a project at listandsell.de" /></a>
 
 <br /><br />
