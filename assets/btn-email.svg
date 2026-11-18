@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="248" height="56" viewBox="0 0 248 56" role="img" aria-label="info@listandsell.de"><defs>
+<linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b2a5c"/><stop offset="1" stop-color="#020c1d"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff2a40"/><stop offset="1" stop-color="#ff7a2a"/></linearGradient>
+<radialGradient id="glow"><stop offset="0" stop-color="#ff2a40" stop-opacity=".42"/><stop offset="1" stop-color="#ff2a40" stop-opacity="0"/></radialGradient>
+<radialGradient id="glowBlue"><stop offset="0" stop-color="#2f6bff" stop-opacity=".32"/><stop offset="1" stop-color="#2f6bff" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern>
+<filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".45"/></filter>
+<style>
+text { font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+.float { animation: float 6s ease-in-out infinite; }
+.float2 { animation: float 7s ease-in-out 1s infinite; }
+.float3 { animation: float 5s ease-in-out 2s infinite; }
+.pulse { animation: pulse 5s ease-in-out infinite; }
+.rise { animation: rise .8s ease-out both; }
+.draw { stroke-dasharray: 600; animation: draw 2.4s .6s ease-out both; }
+.flow { animation: flow 1.2s linear infinite; }
+.ring { transform-box: fill-box; transform-origin: center; animation: ring 2.8s ease-out infinite; }
+@keyframes float { 50% { transform: translateY(-10px); } }
+@keyframes pulse { 50% { opacity: .55; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes draw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+@keyframes flow { to { stroke-dashoffset: -36; } }
+@keyframes ring { from { transform: scale(1); opacity: .7; } to { transform: scale(1.35); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .float,.float2,.float3,.pulse,.rise,.draw,.flow,.ring { animation: none !important; }
+  .ring { opacity: 0; }
+}
+</style></defs><rect x="1" y="1" width="246" height="54" rx="27" fill="#0b2a5c" stroke="#fff" stroke-opacity=".16"/><circle cx="28" cy="28" r="18" fill="#d0112a"/><g transform="translate(18.4 18.4) scale(0.6)" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="24" height="18" rx="3"/><path d="M5 9l11 8 11-8"/></g><text x="56" y="34" font-size="18" font-weight="700" fill="#fff" text-anchor="start" >info@listandsell.de</text></svg>
