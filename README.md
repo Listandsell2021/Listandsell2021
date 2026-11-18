@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://listandsell.de/"><img src="./assets/hero.svg" width="100%" alt="List &amp; Sell GmbH. We don't just build websites, we make them successful. Full-service digital agency in Berlin: web design, SEO, e-commerce, apps, software and AI." /></a>
+<a href="https://listandsell.de/"><img src="./assets/hero.svg" width="100%" alt="List &amp; Sell" /></a>
 
 <br /><br />
 
@@ -11,23 +11,23 @@
 
 <br /><br />
 
-<img src="./assets/stats.svg" width="100%" alt="Hundreds of projects delivered, 4.9 Google rating, 6 cities in Germany, 1 team for everything. Certified Google Partner, Amazon Ads Verified Partner and JTL Servicepartner." />
+<img src="./assets/about.svg" width="100%" alt="listandsell.ts: hq Berlin, DE; backend PHP, Laravel, Node.js; frontend JavaScript, AngularJS, HTML5, CSS3; mobile iOS, Android, Hybrid; commerce Shopify, WooCommerce, Magento, JTL, Afterbuy; builds web apps, shops, ERP, CRM, APIs, AI." />
 
 <br /><br />
 
-<img src="./assets/services.svg" width="100%" alt="What we do: Web Design, Online Marketing, E-Commerce, Software, Apps and AI Solutions, all from one source." />
+<img src="./assets/services.svg" width="100%" alt="What we build: Web Applications, Commerce Engineering, Custom Software, APIs &amp; Integrations, Mobile Apps, AI Solutions." />
 
 <br /><br />
 
-<img src="./assets/process.svg" width="100%" alt="How we work: 1 Analyse, 2 Design, 3 Build, 4 Grow." />
+<img src="./assets/process.svg" width="100%" alt="How we ship: 1 Spec, 2 Build, 3 Test, 4 Ship." />
 
 <br /><br />
 
-<img src="./assets/platforms.svg" width="100%" alt="Tech and platforms: HTML5, JavaScript, PHP, Laravel, Node.js, AngularJS, iOS, Android, Shopify, WooCommerce, Magento, JTL, Afterbuy, Gambio, xt:Commerce, WordPress, TYPO3, Joomla, Google Ads, Microsoft Ads, Amazon Ads, Google Analytics, Semrush, ahrefs, Matomo and more." />
+<img src="./assets/platforms.svg" width="100%" alt="Tech stack: PHP, Laravel, Node.js, databases, REST APIs, JavaScript, AngularJS, HTML5, CSS3, iOS, Android, Shopify, WooCommerce, Magento, Gambio, xt:Commerce, JTL, Afterbuy, WordPress, TYPO3, Joomla, Amazon and eBay integrations, Google Tag Manager, Google Analytics, Matomo." />
 
 <br /><br />
 
-<a href="https://listandsell.de/"><img src="./assets/cta.svg" width="100%" alt="Ready to turn your words into sales? Start your project at listandsell.de" /></a>
+<a href="https://listandsell.de/"><img src="./assets/cta.svg" width="100%" alt="Have a project to build? Let's ship it. Start a project at listandsell.de" /></a>
 
 <br /><br />
 
